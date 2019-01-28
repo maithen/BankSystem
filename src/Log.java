@@ -1,9 +1,12 @@
 
+
 public class Log {
 	
 	private long timestamp;
 	private int clientId;
 	private String description;
+	
+	
 	
 	
 	public Log(long timestamp, int clientId , String description) {
@@ -15,7 +18,7 @@ public class Log {
 	}
 	
 	public String getData() {
-		return String.format(" Time : %s, Client ID : %d, Description : %s .",timestamp, clientId, description);
+		return  String.format(" Time : %s, Client ID : %d, Description : %s .",timestamp, clientId, description);
 	}
 	
 
