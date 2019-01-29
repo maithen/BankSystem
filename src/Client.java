@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 public class Client {
 	
@@ -125,6 +126,13 @@ public class Client {
 	}
 	public void setInterestRate(float interestRate) {
 		this.interestRate = interestRate;
+	}
+	
+	@Override
+	public String toString() {
+		return "Client [cid=" + cid + ", name=" + name + ", balance=" + balance + ", comissionRate=" + comissionRate
+				+ ", interestRate=" + interestRate + ", logger=" + logger + ", account=" + Arrays.toString(account)
+				+ "]";
 	}
 	
 	

@@ -27,8 +27,8 @@ public class BankOutput {
 		
 		
 	
-		System.out.println(bank.clients[0].getAccount(333));
-		System.out.println(bank.clients[0].getBalance());
+		System.out.println(bank.clients[0]);
+
 
 		
 		

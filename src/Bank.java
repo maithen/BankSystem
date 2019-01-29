@@ -3,8 +3,9 @@ public class Bank {
 	
 	Client[] clients = new Client[100];
 	private Logger logService;
-	//Account updater that I'm leaving for later
+	//->Account updater that I'm leaving for later
 	private float balance;
+	
 	
 	//Constructor (empty for now)
 	public Bank() {
@@ -12,6 +13,8 @@ public class Bank {
 			
 			
 		}
+	
+	//Adding a client to the array
 	public void addClient(int id, String name, float balance) {
 		for(int i=0;i<clients.length;i++) {
 			if(clients[i]==null) {
@@ -20,6 +23,8 @@ public class Bank {
 			}
 	}
 	}
+	
+	//removing a client from the array
 	public void removeClient(int id) {
 		for(int i=0;i<clients.length;i++) {
 			if(id==clients[i].getCid()) {
@@ -29,6 +34,7 @@ public class Bank {
 			}
 		}
 	}
+	
 	public float getBalance() {
 		int sum=0;
 		for(int i=0;i<clients.length;i++) {
