@@ -46,11 +46,11 @@ public class Client {
 	// Getting Account details by an account ID
 	public String getAccount(int accountId) {
 		for(int i=0;i<account.length;i++) {		
-			if(accountId==account[i].getId()){
+			if(account[i]!=null && accountId==account[i].getId()){
 				return String.format("%s \n" ,account[i]);
 			}
 		}	
-		return "hehe";
+		return String.format("Account ID: %d does not exist.", accountId);
 	}
 	// Removing an account by an account ID
 	public void removeAccount(int id) {

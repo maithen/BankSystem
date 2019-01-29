@@ -23,14 +23,8 @@ public class BankOutput {
 	
 		
 		
-		System.out.println(bank.clients[0].getAccounts());
-		
-		
-		bank.clients[0].addAccount(333, 4555);
-		bank.clients[0].addAccount(334, 666);
-		bank.clients[0].addAccount(336, 666);
-
-		
+		System.out.println(bank.clients[0].getAccount(336));
+		System.out.println(bank.clients[0].getAccount(333));
 		
 		System.out.println(bank.clients[0].getAccounts());
 		
