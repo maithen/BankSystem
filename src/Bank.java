@@ -3,16 +3,15 @@ public class Bank {
 	
 	Client[] clients = new Client[100];
 	private Logger logService;
-	//Account updater that im leaving for later
+	//Account updater that I'm leaving for later
 	private float balance;
 	
+	//Constructor (empty for now)
 	public Bank() {
 	
 			
 			
 		}
-	
-	
 	public void addClient(int id, String name, float balance) {
 		for(int i=0;i<clients.length;i++) {
 			if(clients[i]==null) {
@@ -41,7 +40,7 @@ public class Bank {
 	}
 	
 	public Client[] getClients() {
-		return Logger.;
+		return Logger(log);
 		
 	}
 	

@@ -15,19 +15,31 @@ public class BankOutput {
 		
 		bank.addClient(345, "moshe", 555);
 		
-		System.out.println(bank.clients[0].getName());
-		System.out.println(bank.getBalance());
+		//System.out.println(bank.clients[0].getName());
+		//System.out.println(bank.getBalance());
 		
 		bank.clients[0].addAccount(333, 444);
+		bank.clients[0].addAccount(334, 456);
+	
 		
-		System.out.println(bank.clients[0].getName());
-		System.out.println("bank fortune is "  +bank.getBalance());
+		
+		System.out.println(bank.clients[0].getAccounts());
+		
+		
+		bank.clients[0].addAccount(333, 4555);
+		bank.clients[0].addAccount(334, 666);
+		bank.clients[0].addAccount(336, 666);
+
+		
+		
+		System.out.println(bank.clients[0].getAccounts());
+		
 		
 		
 	
 		
 		
-		System.out.println(bank.getClients());
+		
 		
 		
 		
