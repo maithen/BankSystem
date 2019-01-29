@@ -18,6 +18,7 @@ public class Client {
 		logger = new Logger("matan");
 	
 	}
+	
 	// Adding an account to a Client(does not allow duplicate ID's)
 	public void addAccount(int id, float balance) {
 		for(int j=0;j<account.length;j++) {
@@ -34,6 +35,7 @@ public class Client {
 					}
 				}
 			}		
+	
 	// Getting all Accounts.
 	public String getAccounts(){
 		String gA = "";
@@ -44,6 +46,7 @@ public class Client {
 		}
 		return gA;
 	}
+	
 	// Getting Account details by an account ID
 	public String getAccount(int accountId) {
 		for(int i=0;i<account.length;i++) {		
@@ -53,6 +56,7 @@ public class Client {
 		}	
 		return String.format("Account ID: %d does not exist.", accountId);
 	}
+	
 	// Removing an account by an account ID
 	public void removeAccount(int id) {
 		for(int i=0;i<account.length;i++) {
@@ -66,15 +70,18 @@ public class Client {
 			}
 		System.out.printf("Account ID: %d does not exist. thus cannot be removed. \n",id);
 		}
+	
 	// Making a deposit to a Client.
 	public void deposit(float dp) {
 		
 		balance += dp-comissionRate;
 	}
+	
 	// Making a withdraw from a Client.
 	public void withdraw(float wd) {
 		balance -= wd+comissionRate;
 	}
+	
 	// Auto-updating the amount of interest to add on each Client's accounts
 	public void autoUpdateAccounts() {
 		for(int i=0;i<account.length;i++) {
@@ -83,6 +90,7 @@ public class Client {
 			Logger logger;
 		}
 		}
+	
 	// Returning the sum of a client balance + total accounts balance.
 	public float getFortune() {
 		float sum=0;
