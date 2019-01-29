@@ -55,7 +55,7 @@ public class Client {
 	// Removing an account by an account ID
 	public void removeAccount(int id) {
 		for(int i=0;i<account.length;i++) {
-			if(id==account[i].getId()){
+			if(account[i]!=null && id==account[i].getId()){
 				balance += account[i].getBalance();
 				logger = new Logger("");
 				Log log = new Log(System.currentTimeMillis(), getCid(), "customer has deleted account id:" + account[i].getId());
@@ -63,7 +63,7 @@ public class Client {
 				return;
 			}
 			}
-
+		System.out.printf("Account ID: %d does not exist. thus cannot be removed. \n",id);
 		}
 	// Making a deposit to a Client.
 	public void deposit(float dp) {

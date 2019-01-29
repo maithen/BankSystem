@@ -25,8 +25,12 @@ public class BankOutput {
 		
 		System.out.println(bank.clients[0].getAccount(336));
 		System.out.println(bank.clients[0].getAccount(333));
+		bank.clients[0].removeAccount(335);
+		bank.clients[0].removeAccount(333);
 		
 		System.out.println(bank.clients[0].getAccounts());
+		
+		
 		
 		
 		
