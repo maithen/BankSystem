@@ -19,7 +19,7 @@ public class Client {
 	
 	}
 	
-	// Adding an account to a Client(does not allow duplicate ID's)
+	// Adding an account to a Client(does not allow duplicate IDs)
 	public void addAccount(int id, float balance) {
 		for(int j=0;j<account.length;j++) {
 			if (account[j]!=null && id==account[j].getId()){
