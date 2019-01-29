@@ -19,17 +19,17 @@ public class BankOutput {
 		//System.out.println(bank.getBalance());
 		
 		bank.clients[0].addAccount(333, 444);
-		bank.clients[0].addAccount(334, 456);
-	
-		
-		
-		System.out.println(bank.clients[0].getAccount(336));
 		System.out.println(bank.clients[0].getAccount(333));
-		bank.clients[0].removeAccount(335);
+		bank.clients[0].addAccount(334, 456);
 		bank.clients[0].removeAccount(333);
+		bank.clients[0].addAccount(333, 7576);
+		bank.clients[0].account[0].setBalance(500);
 		
-		System.out.println(bank.clients[0].getAccounts());
 		
+	
+		System.out.println(bank.clients[0].getAccount(333));
+		System.out.println(bank.clients[0].getBalance());
+
 		
 		
 		
