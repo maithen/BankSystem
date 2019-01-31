@@ -21,6 +21,7 @@ public class Logger {
 		
 	}
 	
+	//public Log[] getLogs() {}
 	
 
 }
