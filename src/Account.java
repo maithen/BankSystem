@@ -3,11 +3,11 @@ public class Account {
 
 	private int id;
 	private float balance;
+	private Logger logger;
 	
 	public Account(int id, float balance) {
-			super();
 			this.id=id;
-		setBalance(balance);
+		this.balance=balance;
 	}
 	
 	public int getId() {
@@ -17,20 +17,21 @@ public class Account {
 	public float getBalance() {
 		return balance;
 	}
-	//unresolved for now, I do not understand.
+	
 	public void setBalance(float balance) {
 		this.balance=balance;
-		Log log = new Log(System.currentTimeMillis(), getId() , "Client set an Account Balance");
-		//Logger.log(log);
+		Log log = new Log(System.currentTimeMillis(), getId() , "Client set an Account Balance", balance);
+		logger.log(log);
 		
+	}
+
+	@Override
+	public String toString() {
+		return String.format("Account [id=%s, balance=%s]", id, balance);
 	}
 
 	
 	
-	@Override
-	public String toString() {
-		return "Account ID : " + id + ", Balance : " + balance + "";
-	}
 
 
 	

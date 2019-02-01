@@ -7,15 +7,16 @@ public class Client {
 	private float balance;
 	private float comissionRate=0;
 	private float  interestRate=0;;
-	private Logger logger;
-	Account[] account = new Account[5];
+	private Account[] account = new Account[5];
+	private Logger logger = new Logger("drivername");
+	
 	
 	// Constructor
 	public Client(int clientId, String clientName, float clientBalance) {
 		setCid(clientId);
 		setName(clientName);
 		setBalance(clientBalance);
-		logger = new Logger("matan");
+		logger = new Logger("matanzo");
 	
 	}
 	
@@ -30,7 +31,8 @@ public class Client {
 		for(int i=0;i<account.length;i++) {
 			if(account[i]==null) {
 				account[i]= new Account(id,balance);
-				Logger logger;
+				Log log = new Log(System.currentTimeMillis(), getCid(), String.format("Account ID: %d has been added to Client.",account[i].getId()), balance);
+				logger.log(log);
 				return;
 					}
 				}
@@ -62,8 +64,8 @@ public class Client {
 		for(int i=0;i<account.length;i++) {
 			if(account[i]!=null && id==account[i].getId()){
 				balance += account[i].getBalance();
-				logger = new Logger("");
-				Log log = new Log(System.currentTimeMillis(), getCid(), "customer has deleted account id:" + account[i].getId());
+				Log log = new Log(System.currentTimeMillis(), getCid(), String.format("Client has deleted Account ID: %d", account[i].getId()), account[i].getBalance());
+				logger.log(log);
 				account[i]=null;
 				return;
 			}
@@ -87,8 +89,9 @@ public class Client {
 		for(int i=0;i<account.length;i++) {
 			if(account[i]!=null)
 			 account[i].setBalance((account[i].getBalance()+ getInterestRate()));
-			Logger logger;
 		}
+		Log log = new Log(System.currentTimeMillis(), getCid(), "Interest added to the Client's Account balance", getInterestRate());
+		logger.log(log);
 		}
 	
 	// Returning the sum of a client balance + total accounts balance.
@@ -110,7 +113,8 @@ public class Client {
 	}
 	public void setCid(int id) {
 		this.cid = id;
-	}
+		}
+	
 	public String getName() {
 		return name;
 	}
@@ -136,11 +140,64 @@ public class Client {
 		this.interestRate = interestRate;
 	}
 	
+
+	
+
+
+
+	
+
 	@Override
 	public String toString() {
-		return "Client [cid=" + cid + ", name=" + name + ", balance=" + balance + ", comissionRate=" + comissionRate
-				+ ", interestRate=" + interestRate + ", logger=" + logger + ", account=" + Arrays.toString(account)
-				+ "]";
+		return String.format(
+				"Client [cid=%s, name=%s, balance=%s, comissionRate=%s, interestRate=%s, logger=%s, account=%s] \n", cid,
+				name, balance, comissionRate, interestRate, logger, Arrays.toString(account));
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(account);
+		result = prime * result + Float.floatToIntBits(balance);
+		result = prime * result + cid;
+		result = prime * result + Float.floatToIntBits(comissionRate);
+		result = prime * result + Float.floatToIntBits(interestRate);
+		result = prime * result + ((logger == null) ? 0 : logger.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Client other = (Client) obj;
+		if (!Arrays.equals(account, other.account))
+			return false;
+		if (Float.floatToIntBits(balance) != Float.floatToIntBits(other.balance))
+			return false;
+		if (cid != other.cid)
+			return false;
+		if (Float.floatToIntBits(comissionRate) != Float.floatToIntBits(other.comissionRate))
+			return false;
+		if (Float.floatToIntBits(interestRate) != Float.floatToIntBits(other.interestRate))
+			return false;
+		if (logger == null) {
+			if (other.logger != null)
+				return false;
+		} else if (!logger.equals(other.logger))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
 	}
 	
 	
