@@ -150,7 +150,7 @@ public class Client {
 	@Override
 	public String toString() {
 		return String.format(
-				"Client [cid=%s, name=%s, balance=%s, comissionRate=%s, interestRate=%s, logger=%s, account=%s] \n", cid,
+				"Client [ID=%s, Name=%s, Balance=%s, comissionRate=%s, interestRate=%s, logger=%s, \n Accounts=%s] \n", cid,
 				name, balance, comissionRate, interestRate, logger, Arrays.toString(account));
 	}
 

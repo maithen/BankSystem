@@ -6,20 +6,28 @@ import java.util.StringTokenizer;
 
 public class Bank {
 	
+	private static Bank instance = new Bank("The Big Bank");
+	private String bankName;
 	private Client[] clients;
 	private Logger logService;
 	private Logger logger = new Logger("DriverName");
 	private float balance;
 
 	
+			
+	
+	public static Bank bank() {
+		return instance;
+	}
+	
 	
 	//Constructor (empty for now)
-	public Bank() {
-	
+	private Bank(String bankName) {
+			setBankName(bankName);
 			clients = new Client[100];
 			
 		}
-	
+
 	// Starts the account updater (empty for now)
 	public void startAccountUpdater() {}
 	
@@ -67,18 +75,31 @@ public class Bank {
 	
 	// Supposed to retrieve clients (shows memory allocation for now), 
 	// done differently with void instead of Client[] like the book asks.
-	public void getClients() {
-			for(int i=0;i<clients.length;i++) {
-				if(clients[i]!=null) {
-		System.out.println(clients[i]);
+	public Client getClient(int id) {
+		Client gc = null;
+		for(int i=0;i<clients.length;i++){
+			if(clients[i]!= null && id == clients[i].getCid()) {
+				 return clients[i];
+			}else {
+				return gc;	
+			}
 		}
-	}
-	}
+				return gc;
+		}
 	
+	
+	public String getBankName() {
+		return bankName;
+	}
+
+
+	private void setBankName(String bankName) {
+		this.bankName = bankName;
+	}
 	
 	@Override
 	public String toString() {
-		return String.format("Bank [clients=%s, logService=%s, balance=%s]", Arrays.toString(clients), logService,
+		return String.format("Name : %s , Bank [clients=%s, logService=%s, balance=%s]", getBankName() , Arrays.toString(clients), logService,
 				balance);
 	}
 
