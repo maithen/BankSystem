@@ -11,18 +11,20 @@ public class BankOutput {
 		System.out.println(Bank.bank().getBankName());
 		
 		
-		
-		Bank.bank().addClient(143, "rich guy #1", 346346364);
+		bank.addClient(143, "loki", 40);
+		bank.getClient(143).withdraw(500);
+	
 		
 		bank.getClient(143).addAccount(444, 34634);
 		bank.getClient(143).addAccount(4488, 344);
 		bank.getClient(143).addAccount(7774, 634);
 		
 		System.out.println(bank.getClient(143));
+		System.out.println(bank.getClients());
 		
-
+		bank.addClient(405, "ama", 294);
 		
-		
+		System.out.println(bank.getClient(405));
 		
 
 	}

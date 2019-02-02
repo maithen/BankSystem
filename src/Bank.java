@@ -12,14 +12,31 @@ public class Bank {
 	private Logger logService;
 	private Logger logger = new Logger("DriverName");
 	private float balance;
-
+	private static float totalCommission;
+	
+	
+	
+	
 	
 			
+	public static Bank getInstance() {
+		return instance;
+	}
 	
+	public static float updateTotalCommission(float UTC) {
+			return totalCommission += UTC;
+	}
+			
+	// Using the bank instance
 	public static Bank bank() {
 		return instance;
 	}
 	
+	public void printClientList() {
+		for(int i=0;i<clients.length;i++) {
+			System.out.println(clients[i]);
+		}
+	}
 	
 	//Constructor (empty for now)
 	private Bank(String bankName) {
@@ -41,17 +58,21 @@ public class Bank {
 		}
 		for(int i=0;i<clients.length;i++) {
 			if(clients[i]==null) {
-			clients[i] = new Client(id, name, balance);	
+			clients[i] = new Regular_Client(id, name, balance); 
+			}
 			Log log = new Log(System.currentTimeMillis(), clients[i].getCid(), "Client has been added to the bank.", balance);
 			logger.log(log);
 			return;
 		}
 		}
-	}
-
+	
+	
 	//removing a client from the array
-	public void removeClient(int id) {
-		for(int i=0;i<clients.length;i++) {
+	public void removeClient(Client client) {
+		
+		Client.equals(client);
+		
+	/*	for(int i=0;i<clients.length;i++) {
 			if(clients[i]!= null && id == clients[i].getCid()) {
 				Log log = new Log(System.currentTimeMillis(), clients[i].getCid(), "Client  has been removed.", clients[i].getBalance());
 				logger.log(log);
@@ -59,7 +80,7 @@ public class Bank {
 				return;
 			}	
 			}
-		System.out.printf("Client ID: %d does not exist. \n", id);
+		System.out.printf("Client ID: %d does not exist. \n", id);*/
 		}
 	
 	// Retrieving the bank's balance
@@ -70,28 +91,28 @@ public class Bank {
 				sum+= clients[i].getFortune();
 			}
 		}
-		return sum+balance;
+		return sum+totalCommission;
 	}
 	
 	// Supposed to retrieve clients (shows memory allocation for now), 
-	// done differently with void instead of Client[] like the book asks.
+	public Client[] getClients() {
+			return clients;
+		}
+	
 	public Client getClient(int id) {
 		Client gc = null;
 		for(int i=0;i<clients.length;i++){
 			if(clients[i]!= null && id == clients[i].getCid()) {
 				 return clients[i];
-			}else {
-				return gc;	
 			}
+			
 		}
 				return gc;
 		}
 	
-	
 	public String getBankName() {
 		return bankName;
 	}
-
 
 	private void setBankName(String bankName) {
 		this.bankName = bankName;
@@ -134,10 +155,7 @@ public class Bank {
 		return true;
 	}
 	
-
-
-
-
+	
 }
 
 

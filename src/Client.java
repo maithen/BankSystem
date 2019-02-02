@@ -1,17 +1,18 @@
 import java.util.Arrays;
 
-public class Client {
+public abstract class Client {
 	
 	private int cid;
 	private String name;
 	private float balance;
-	private float comissionRate=0;
-	private float  interestRate=0;;
+	protected final float commissionRate;
+	protected final float interestRate;
 	private Account[] account = new Account[5];
 	private Logger logger = new Logger("drivername");
+	private int counter=0;
 	
 	
-	// Constructor
+	
 	public Client(int clientId, String clientName, float clientBalance) {
 		setCid(clientId);
 		setName(clientName);
@@ -20,6 +21,7 @@ public class Client {
 	
 	}
 	
+
 	// Adding an account to a Client(does not allow duplicate IDs)
 	public void addAccount(int id, float balance) {
 		for(int j=0;j<account.length;j++) {
@@ -76,12 +78,14 @@ public class Client {
 	// Making a deposit to a Client.
 	public void deposit(float dp) {
 		
-		balance += dp-comissionRate;
+		balance += dp-getCommissionRate();
+		
 	}
 	
 	// Making a withdraw from a Client.
-	public void withdraw(float wd) {
-		balance -= wd+comissionRate;
+	public void withdraw(float amount) {
+		balance -= amount+(amount*getCommissionRate());
+		Bank.updateTotalCommission(getCommissionRate());
 	}
 	
 	// Auto-updating the amount of interest to add on each Client's accounts
@@ -127,11 +131,13 @@ public class Client {
 	public void setBalance(float balance) {
 		this.balance = balance;
 	}
-	public float getComissionRate() {
-		return comissionRate;
+	public float getCommissionRate() {
+		return commissionRate;
 	}
-	public void setComissionRate(float comissionRate) {
-		this.comissionRate = comissionRate;
+	public void setCommissionRate(float commissionRate) {
+		this.commissionRate =commissionRate;
+		
+		
 	}
 	public float getInterestRate() {
 		return interestRate;
@@ -139,32 +145,22 @@ public class Client {
 	public void setInterestRate(float interestRate) {
 		this.interestRate = interestRate;
 	}
-	
-
-	
-
-
-
-	
+	public int getCounter() {
+		return counter;
+	}
 
 	@Override
 	public String toString() {
 		return String.format(
-				"Client [ID=%s, Name=%s, Balance=%s, comissionRate=%s, interestRate=%s, logger=%s, \n Accounts=%s] \n", cid,
-				name, balance, comissionRate, interestRate, logger, Arrays.toString(account));
+				"Client [ID=%s, Name=%s, Balance=%s, comissionRate=%s, interestRate=%s, logger=%s]\n%s's Accounts=%s] \n", cid,
+				name, balance, commissionRate, interestRate, logger,name, Arrays.toString(account));
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + Arrays.hashCode(account);
-		result = prime * result + Float.floatToIntBits(balance);
 		result = prime * result + cid;
-		result = prime * result + Float.floatToIntBits(comissionRate);
-		result = prime * result + Float.floatToIntBits(interestRate);
-		result = prime * result + ((logger == null) ? 0 : logger.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
 
@@ -177,25 +173,7 @@ public class Client {
 		if (getClass() != obj.getClass())
 			return false;
 		Client other = (Client) obj;
-		if (!Arrays.equals(account, other.account))
-			return false;
-		if (Float.floatToIntBits(balance) != Float.floatToIntBits(other.balance))
-			return false;
 		if (cid != other.cid)
-			return false;
-		if (Float.floatToIntBits(comissionRate) != Float.floatToIntBits(other.comissionRate))
-			return false;
-		if (Float.floatToIntBits(interestRate) != Float.floatToIntBits(other.interestRate))
-			return false;
-		if (logger == null) {
-			if (other.logger != null)
-				return false;
-		} else if (!logger.equals(other.logger))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
 			return false;
 		return true;
 	}
