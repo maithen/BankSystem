@@ -5,8 +5,8 @@ public abstract class Client {
 	private int cid;
 	private String name;
 	private float balance;
-	protected final float commissionRate;
-	protected final float interestRate;
+	protected float commissionRate;
+	protected float interestRate;
 	private Account[] account = new Account[5];
 	private Logger logger = new Logger("drivername");
 	private int counter=0;
@@ -17,7 +17,8 @@ public abstract class Client {
 		setCid(clientId);
 		setName(clientName);
 		setBalance(clientBalance);
-		logger = new Logger("matanzo");
+		
+		logger = new Logger("mzo");
 	
 	}
 	
@@ -85,7 +86,7 @@ public abstract class Client {
 	// Making a withdraw from a Client.
 	public void withdraw(float amount) {
 		balance -= amount+(amount*getCommissionRate());
-		Bank.updateTotalCommission(getCommissionRate());
+		Bank.updateTotalCommission(amount*getCommissionRate());
 	}
 	
 	// Auto-updating the amount of interest to add on each Client's accounts
@@ -134,7 +135,7 @@ public abstract class Client {
 	public float getCommissionRate() {
 		return commissionRate;
 	}
-	public void setCommissionRate(float commissionRate) {
+	protected final void setCommissionRate(float commissionRate) {
 		this.commissionRate =commissionRate;
 		
 		
@@ -142,7 +143,7 @@ public abstract class Client {
 	public float getInterestRate() {
 		return interestRate;
 	}
-	public void setInterestRate(float interestRate) {
+	protected final void setInterestRate(float interestRate) {
 		this.interestRate = interestRate;
 	}
 	public int getCounter() {
@@ -152,7 +153,7 @@ public abstract class Client {
 	@Override
 	public String toString() {
 		return String.format(
-				"Client [ID=%s, Name=%s, Balance=%s, comissionRate=%s, interestRate=%s, logger=%s]\n%s's Accounts=%s] \n", cid,
+				"Client [ID=%s, Name=%s, Balance=%s, comissionRate=%s, interestRate=%s, logger=%s]\n%s's Accounts=%s] ", cid,
 				name, balance, commissionRate, interestRate, logger,name, Arrays.toString(account));
 	}
 

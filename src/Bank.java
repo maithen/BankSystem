@@ -11,7 +11,7 @@ public class Bank {
 	private Client[] clients;
 	private Logger logService;
 	private Logger logger = new Logger("DriverName");
-	private float balance;
+	private float bBalance;
 	private static float totalCommission;
 	
 	
@@ -23,8 +23,8 @@ public class Bank {
 		return instance;
 	}
 	
-	public static float updateTotalCommission(float UTC) {
-			return totalCommission += UTC;
+	public static void updateTotalCommission(float UTC) {
+			 totalCommission += UTC;
 	}
 			
 	// Using the bank instance
@@ -58,11 +58,11 @@ public class Bank {
 		}
 		for(int i=0;i<clients.length;i++) {
 			if(clients[i]==null) {
-			clients[i] = new Regular_Client(id, name, balance); 
-			}
+			clients[i] = new Regular_Client( id,  name, balance);
 			Log log = new Log(System.currentTimeMillis(), clients[i].getCid(), "Client has been added to the bank.", balance);
 			logger.log(log);
 			return;
+			}
 		}
 		}
 	
@@ -83,15 +83,25 @@ public class Bank {
 		System.out.printf("Client ID: %d does not exist. \n", id);*/
 		}
 	
-	// Retrieving the bank's balance
+	// Setting the bank's balance
+	public void setBalance() {
+		//float sum = 0;
+	//	for(int i=0;i<clients.length;i++) {
+		//	if(clients[i]!=null) {
+			//	sum += clients[i].getFortune();
+			//}
+		//}
+			bBalance = getTC();
+	}
+	
+	// Getting the bank's balance
 	public float getBalance() {
-		int sum=0;
-		for(int i=0;i<clients.length;i++) {
-			if(clients[i]!=null) {
-				sum+= clients[i].getFortune();
-			}
-		}
-		return sum+totalCommission;
+	
+		return bBalance;
+	}
+	
+	public float getTC() {
+		return totalCommission;
 	}
 	
 	// Supposed to retrieve clients (shows memory allocation for now), 
