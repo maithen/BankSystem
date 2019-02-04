@@ -19,18 +19,15 @@ public class Log {
 	}
 	
 	// Prints the log
-	public String getData() {
+	public String toString() {
 		return  String.format("Time: %s, Client ID: %d, Description: '%s', Amount: %f. ",timestamp, clientId, description, amount);
 	}
 	
-	@Override
-	public String toString() {
-		return String.format("Log [timestamp=%s, clientId=%s, description=%s, amount=%s]", timestamp, clientId,
-				description, amount);
+
 	}
 	
 	
 	
 	
 
-}
+

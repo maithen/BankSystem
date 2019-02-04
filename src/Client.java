@@ -5,20 +5,20 @@ public abstract class Client {
 	private int cid;
 	private String name;
 	private float balance;
-	protected float commissionRate;
-	protected float interestRate;
+	protected final float commissionRate;
+	protected final float interestRate;
 	private Account[] account = new Account[5];
-	private Logger logger = new Logger("drivername");
 	private int counter=0;
 	
 	
 	
-	public Client(int clientId, String clientName, float clientBalance) {
+	public Client(int clientId, String clientName, float clientBalance, float cr, float ir) {
+		this.commissionRate = cr;
+		this.interestRate = ir;
 		setCid(clientId);
 		setName(clientName);
 		setBalance(clientBalance);
 		
-		logger = new Logger("mzo");
 	
 	}
 	
@@ -35,7 +35,7 @@ public abstract class Client {
 			if(account[i]==null) {
 				account[i]= new Account(id,balance);
 				Log log = new Log(System.currentTimeMillis(), getCid(), String.format("Account ID: %d has been added to Client.",account[i].getId()), balance);
-				logger.log(log);
+				Logger.log(log);
 				return;
 					}
 				}
@@ -63,17 +63,17 @@ public abstract class Client {
 	}
 	
 	// Removing an account by an account ID
-	public void removeAccount(int id) {
+	public void removeAccount(Account acc) {
 		for(int i=0;i<account.length;i++) {
-			if(account[i]!=null && id==account[i].getId()){
+			if(account[i]!=null && account[i].equals(acc)){
 				balance += account[i].getBalance();
 				Log log = new Log(System.currentTimeMillis(), getCid(), String.format("Client has deleted Account ID: %d", account[i].getId()), account[i].getBalance());
-				logger.log(log);
+				Logger.log(log);
 				account[i]=null;
 				return;
 			}
 			}
-		System.out.printf("Account ID: %d does not exist. thus cannot be removed. \n",id);
+		System.out.printf("Account: %s does not exist. thus cannot be removed. \n", acc);
 		}
 	
 	// Making a deposit to a Client.
@@ -96,7 +96,7 @@ public abstract class Client {
 			 account[i].setBalance((account[i].getBalance()+ getInterestRate()));
 		}
 		Log log = new Log(System.currentTimeMillis(), getCid(), "Interest added to the Client's Account balance", getInterestRate());
-		logger.log(log);
+		Logger.log(log);
 		}
 	
 	// Returning the sum of a client balance + total accounts balance.
@@ -135,17 +135,15 @@ public abstract class Client {
 	public float getCommissionRate() {
 		return commissionRate;
 	}
-	protected final void setCommissionRate(float commissionRate) {
-		this.commissionRate =commissionRate;
+	//public void setCommissionRate(float commissionRate) {
 		
+		//this.commissionRate = commissionRate;
 		
-	}
+	//}
 	public float getInterestRate() {
 		return interestRate;
 	}
-	protected final void setInterestRate(float interestRate) {
-		this.interestRate = interestRate;
-	}
+
 	public int getCounter() {
 		return counter;
 	}
@@ -153,8 +151,8 @@ public abstract class Client {
 	@Override
 	public String toString() {
 		return String.format(
-				"Client [ID=%s, Name=%s, Balance=%s, comissionRate=%s, interestRate=%s, logger=%s]\n%s's Accounts=%s] ", cid,
-				name, balance, commissionRate, interestRate, logger,name, Arrays.toString(account));
+				"Client [ID=%s, Name=%s, Balance=%s, comissionRate=%s, interestRate=%s,]\n%s's Accounts=%s] ", cid,
+				name, balance, commissionRate, interestRate,name, Arrays.toString(account));
 	}
 
 	@Override

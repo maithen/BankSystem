@@ -3,7 +3,7 @@ public class Account {
 
 	private int id;
 	private float balance;
-	private Logger logger;
+	
 	
 	public Account(int id, float balance) {
 			this.id=id;
@@ -21,7 +21,7 @@ public class Account {
 	public void setBalance(float balance) {
 		this.balance=balance;
 		Log log = new Log(System.currentTimeMillis(), getId() , "Client set an Account Balance", balance);
-		logger.log(log);
+		Logger.log(log);
 		
 	}
 
@@ -29,6 +29,31 @@ public class Account {
 	public String toString() {
 		return String.format("Account [id=%s, balance=%s]", id, balance);
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Account other = (Account) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+	
+	
+	
 
 	
 	

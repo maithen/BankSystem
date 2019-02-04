@@ -10,21 +10,15 @@ public class Bank {
 	private String bankName;
 	private Client[] clients;
 	private Logger logService;
-	private Logger logger = new Logger("DriverName");
 	private float bBalance;
 	private static float totalCommission;
 	
-	
-	
-	
-	
 			
-	public static Bank getInstance() {
-		return instance;
-	}
 	
 	public static void updateTotalCommission(float UTC) {
 			 totalCommission += UTC;
+			 bank().setBalance();
+			
 	}
 			
 	// Using the bank instance
@@ -52,26 +46,50 @@ public class Bank {
 	public void addClient(int id, String name, float balance) {
 		for(int j=0;j<clients.length;j++) {
 			if (clients[j]!=null && id==clients[j].getCid()) {
-				System.out.printf("Client ID: %d already exists. \n", id);
-				return;
-			}
-		}
-		for(int i=0;i<clients.length;i++) {
-			if(clients[i]==null) {
-			clients[i] = new Regular_Client( id,  name, balance);
-			Log log = new Log(System.currentTimeMillis(), clients[i].getCid(), "Client has been added to the bank.", balance);
-			logger.log(log);
+			System.out.printf("Client ID: %d already exists. \n", id);
 			return;
 			}
+		}
+		
+		for(int i=0;i<clients.length;i++) {
+			if(clients[i]==null && balance<=500) {
+			clients[i] = new Regular_Client( id,  name, balance);
+			Log log = new Log(System.currentTimeMillis(), clients[i].getCid(), "Regular Client has been added to the bank.", balance);
+			Logger.log(log);
+			return;
+			}
+		}
+		
+			for(int i=0;i<clients.length;i++) {
+				if(clients[i]==null && balance>500 &&  balance<=1000) {
+				clients[i] = new Gold_Client( id,  name, balance);
+				Log log = new Log(System.currentTimeMillis(), clients[i].getCid(), "Gold Client has been added to the bank.", balance);
+				Logger.log(log);
+				return;
+				}
+			}
+			
+				for(int i=0;i<clients.length;i++) {
+					if(clients[i]==null && balance>=1000) {
+					clients[i] = new Platinum_Client( id,  name, balance);
+					Log log = new Log(System.currentTimeMillis(), clients[i].getCid(), "Platinum Client has been added to the bank.", balance);
+					Logger.log(log);
+					return;
+					}
 		}
 		}
 	
 	
 	//removing a client from the array
 	public void removeClient(Client client) {
-		
-		Client.equals(client);
-		
+		for(int i=0;i<clients.length;i++) {
+			if(clients[i]==client) {
+				Log log = new Log(System.currentTimeMillis(), clients[i].getCid(), "Client has been removed.", clients[i].getBalance());
+				Logger.log(log);
+				clients[i]=null;
+				return;
+			}
+		}
 	/*	for(int i=0;i<clients.length;i++) {
 			if(clients[i]!= null && id == clients[i].getCid()) {
 				Log log = new Log(System.currentTimeMillis(), clients[i].getCid(), "Client  has been removed.", clients[i].getBalance());
@@ -85,13 +103,13 @@ public class Bank {
 	
 	// Setting the bank's balance
 	public void setBalance() {
-		//float sum = 0;
-	//	for(int i=0;i<clients.length;i++) {
-		//	if(clients[i]!=null) {
-			//	sum += clients[i].getFortune();
-			//}
-		//}
-			bBalance = getTC();
+		float sum = 0;
+	for(int i=0;i<clients.length;i++) {
+			if(clients[i]!=null) {
+				sum += clients[i].getFortune();
+			}
+		}
+			this.bBalance = sum+getTotalcommission();
 	}
 	
 	// Getting the bank's balance
@@ -100,7 +118,7 @@ public class Bank {
 		return bBalance;
 	}
 	
-	public float getTC() {
+	public float getTotalcommission() {
 		return totalCommission;
 	}
 	
@@ -131,14 +149,14 @@ public class Bank {
 	@Override
 	public String toString() {
 		return String.format("Name : %s , Bank [clients=%s, logService=%s, balance=%s]", getBankName() , Arrays.toString(clients), logService,
-				balance);
+				bBalance);
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + Float.floatToIntBits(balance);
+		result = prime * result + Float.floatToIntBits(bBalance);
 		result = prime * result + Arrays.hashCode(clients);
 		result = prime * result + ((logService == null) ? 0 : logService.hashCode());
 		return result;
@@ -153,7 +171,7 @@ public class Bank {
 		if (getClass() != obj.getClass())
 			return false;
 		Bank other = (Bank) obj;
-		if (Float.floatToIntBits(balance) != Float.floatToIntBits(other.balance))
+		if (Float.floatToIntBits(bBalance) != Float.floatToIntBits(other.bBalance))
 			return false;
 		if (!Arrays.equals(clients, other.clients))
 			return false;
