@@ -19,6 +19,17 @@ public class BankOutput {
 		System.out.println("banks balance " +bank.getBalance());
 		System.out.println(bank.getClient(143));
 		
+
+		bank.getClient(143).addAccount(444,500);
+		bank.getClient(143).addAccount(466,500);
+
+		System.out.printf("\n%s", bank.getClient(143).getAccount(444));
+		System.out.println("client balance is " + bank.getClient(143).getFortune());
+		System.out.println("bank balance is " +bank.getBalance());
+
+
+		System.out.printf("%s \n", bank.getClient(143).getAccounts());
+		
 		
 
 

@@ -17,7 +17,6 @@ public class Bank {
 	
 	public static void updateTotalCommission(float UTC) {
 			 totalCommission += UTC;
-			 bank().setBalance();
 			
 	}
 			
@@ -114,7 +113,7 @@ public class Bank {
 	
 	// Getting the bank's balance
 	public float getBalance() {
-	
+		Bank.bank().setBalance();
 		return bBalance;
 	}
 	

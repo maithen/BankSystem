@@ -39,6 +39,8 @@ public abstract class Client {
 				return;
 					}
 				}
+
+
 			}		
 	
 	// Getting all Accounts.
@@ -107,7 +109,9 @@ public abstract class Client {
 			sum+=account[i].getBalance();
 		}
 		}
+
 		return sum+balance;
+
 	}
 	
 
