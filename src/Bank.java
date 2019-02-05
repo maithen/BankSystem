@@ -42,7 +42,7 @@ public class Bank {
 	public void startAccountUpdater() {}
 	
 	//Adding a client to the array
-	public void addClient(int id, String name, float balance) {
+	public void addClient(int id, String name,String Type, float balance) {
 		for(int j=0;j<clients.length;j++) {
 			if (clients[j]!=null && id==clients[j].getCid()) {
 			System.out.printf("Client ID: %d already exists. \n", id);
@@ -51,7 +51,7 @@ public class Bank {
 		}
 		
 		for(int i=0;i<clients.length;i++) {
-			if(clients[i]==null && balance<=500) {
+			if(clients[i]==null && Type.equals("regular")) {
 			clients[i] = new Regular_Client( id,  name, balance);
 			Log log = new Log(System.currentTimeMillis(), clients[i].getCid(), "Regular Client has been added to the bank.", balance);
 			Logger.log(log);
@@ -60,7 +60,7 @@ public class Bank {
 		}
 		
 			for(int i=0;i<clients.length;i++) {
-				if(clients[i]==null && balance>500 &&  balance<=1000) {
+				if(clients[i]==null && Type.equals("gold")) {
 				clients[i] = new Gold_Client( id,  name, balance);
 				Log log = new Log(System.currentTimeMillis(), clients[i].getCid(), "Gold Client has been added to the bank.", balance);
 				Logger.log(log);
@@ -69,7 +69,7 @@ public class Bank {
 			}
 			
 				for(int i=0;i<clients.length;i++) {
-					if(clients[i]==null && balance>=1000) {
+					if(clients[i]==null && Type.equals("platinum")) {
 					clients[i] = new Platinum_Client( id,  name, balance);
 					Log log = new Log(System.currentTimeMillis(), clients[i].getCid(), "Platinum Client has been added to the bank.", balance);
 					Logger.log(log);

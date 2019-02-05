@@ -11,7 +11,7 @@ public class BankOutput {
 		System.out.println(Bank.bank().getBankName());
 		
 		
-		bank.addClient(143, "loki", 400);
+		bank.addClient(143, "loki", "platinum", 500);
 		bank.getClient(143).withdraw(200);
 		System.out.println();
 		System.out.println("client fortune " +bank.getClient(143).getFortune());
