@@ -2,10 +2,11 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class Bank {
-	
+	Scanner scanner = new Scanner(System.in);
 	private static Bank instance = new Bank("The Big Bank");
 	private String bankName;
 	private Client[] clients;
@@ -42,14 +43,16 @@ public class Bank {
 	public void startAccountUpdater() {}
 	
 	//Adding a client to the array
-	public void addClient(int id, String name,String Type, float balance) {
+	public void addClient(int id, String name, float balance) {
+	
 		for(int j=0;j<clients.length;j++) {
 			if (clients[j]!=null && id==clients[j].getCid()) {
 			System.out.printf("Client ID: %d already exists. \n", id);
 			return;
 			}
 		}
-		
+		System.out.printf("Enter Client Type: regular, gold, platinum (all lower case) \n");
+		String Type = scanner.nextLine();
 		for(int i=0;i<clients.length;i++) {
 			if(clients[i]==null && Type.equals("regular")) {
 			clients[i] = new Regular_Client( id,  name, balance);
@@ -75,8 +78,9 @@ public class Bank {
 					Logger.log(log);
 					return;
 					}
+				}
 		}
-		}
+		
 	
 	
 	//removing a client from the array

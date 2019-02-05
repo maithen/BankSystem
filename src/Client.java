@@ -11,7 +11,6 @@ public abstract class Client {
 	private int counter=0;
 	
 	
-	
 	public Client(int clientId, String clientName, float clientBalance, float cr, float ir) {
 		this.commissionRate = cr;
 		this.interestRate = ir;
@@ -48,10 +47,15 @@ public abstract class Client {
 		String gA = "";
 		for(int i=0;i<account.length;i++) {
 			if(account[i]!=null) {
-				gA +=  String.format("%s \n", account[i]);
+				gA +=  String.format("%s ,", account[i]);
 			}
+	
 		}
-		return gA;
+		if(gA!= "") {
+		return String.format("Client ID: %d Accounts: %s", getCid(),gA);
+		}else {
+			return null;
+		}
 	}
 	
 	// Getting Account details by an account ID
@@ -86,7 +90,10 @@ public abstract class Client {
 	}
 	
 	// Making a withdraw from a Client.
-	public void withdraw(float amount) {
+	public void withdraw(float amount) throws WithdrawException{
+		if(amount> getBalance()) {
+			Exception WithdrawException;
+		}
 		balance -= amount+(amount*getCommissionRate());
 		Bank.updateTotalCommission(amount*getCommissionRate());
 	}
