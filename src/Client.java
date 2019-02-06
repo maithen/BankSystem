@@ -91,11 +91,13 @@ public abstract class Client {
 	
 	// Making a withdraw from a Client.
 	public void withdraw(float amount) throws WithdrawException{
-		if(amount> getBalance()) {
-			Exception WithdrawException;
-		}
-		balance -= amount+(amount*getCommissionRate());
+		
+		if((amount+ (amount*getCommissionRate()))> getBalance()) {
+			throw new WithdrawException("Cannot withdraw money, insufficient funds", getCid(), getBalance(), amount);
+		}else {
+		balance -=(amount+(amount*getCommissionRate()));
 		Bank.updateTotalCommission(amount*getCommissionRate());
+	}
 	}
 	
 	// Auto-updating the amount of interest to add on each Client's accounts

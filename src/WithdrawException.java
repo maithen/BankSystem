@@ -7,6 +7,7 @@ public class WithdrawException extends Exception{
 	private float withdrawAmount;
 	
 	public WithdrawException(String message, int clientId, float currentBalance, float withdrawAmount) {
+		super(message);
 		setClientId(clientId);
 		setCurrentBalance(currentBalance);
 		setWithdrawAmount(withdrawAmount);
