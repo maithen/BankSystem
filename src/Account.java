@@ -27,7 +27,7 @@ public class Account {
 
 	@Override
 	public String toString() {
-		return String.format("Account [id=%s, balance=%s]", id, balance);
+		return String.format("[id=%s, balance=%s]", id, balance);
 	}
 
 	@Override

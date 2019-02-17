@@ -1,7 +1,11 @@
+import java.util.ArrayList;
+import java.util.List;
 
 public class Logger {
 	
 	private String driverName;
+	private List<Log> logs = new ArrayList();
+	
 
 	public String getDriverName() {
 		return driverName;
@@ -16,12 +20,15 @@ public class Logger {
 	}
 	
 	public static void log (Log log) { 
-
 		System.out.println(log);
 		
 	}
 	
-	//public Log[] getLogs() {}
+	public Log getLogs() {
+		
+		return (Log) logs;
+		
+	}
 	
 
 }

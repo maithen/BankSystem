@@ -1,4 +1,4 @@
-
+import java.util.Date;
 
 public class Log {
 	
@@ -16,11 +16,13 @@ public class Log {
 		this.clientId = clientId;
 		this.description = description;
 		this.amount = amount;
+		
 	}
 	
+	
 	// Prints the log
-	public String toString() {
-		return  String.format("Time: %s, Client ID: %d, Description: '%s', Amount: %f. ",timestamp, clientId, description, amount);
+	public String toString() {	
+		return  String.format("Time: %s, Client ID: %d, Description: '%s', Amount: %f. ",new Date(timestamp), clientId, description, amount);
 	}
 	
 

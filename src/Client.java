@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public abstract class Client {
 	
@@ -7,7 +9,7 @@ public abstract class Client {
 	private float balance;
 	protected final float commissionRate;
 	protected final float interestRate;
-	private Account[] account = new Account[5];
+	private List<Account> accounts = new ArrayList();
 	private int counter=0;
 	
 	
@@ -24,62 +26,62 @@ public abstract class Client {
 
 	// Adding an account to a Client(does not allow duplicate IDs)
 	public void addAccount(int id, float balance) {
-		for(int j=0;j<account.length;j++) {
-			if (account[j]!=null && id==account[j].getId()){
-				System.out.printf("Account ID: %d already exists. pick a new ID to create an account. \n", account[j].getId());
+		for(Account e : accounts) {
+			if (e!=null && id==e.getId()){
+				System.out.printf("Account ID: %d already exists. pick a new ID to create an account. \n", e.getId());
 				return;
 			}
 		}	
-		for(int i=0;i<account.length;i++) {
-			if(account[i]==null) {
-				account[i]= new Account(id,balance);
-				Log log = new Log(System.currentTimeMillis(), getCid(), String.format("Account ID: %d has been added to Client.",account[i].getId()), balance);
+	
+			
+				accounts.add(new Account(id,balance));
+				Log log = new Log(System.currentTimeMillis(), getCid(), String.format("Account ID: %d has been added to Client.",id), balance);
 				Logger.log(log);
 				return;
 					}
-				}
+				
 
 
-			}		
+			
 	
 	// Getting all Accounts.
 	public String getAccounts(){
 		String gA = "";
-		for(int i=0;i<account.length;i++) {
-			if(account[i]!=null) {
-				gA +=  String.format("%s ,", account[i]);
+		for(Account e : accounts) {
+				gA +=  String.format("%s, ", e);
 			}
 	
-		}
+		
 		if(gA!= "") {
-		return String.format("Client ID: %d Accounts: %s", getCid(),gA);
+		return String.format("%s",gA);
 		}else {
-			return null;
+			gA = "Client has no accounts";
+			return gA;
 		}
 	}
 	
 	// Getting Account details by an account ID
 	public String getAccount(int accountId) {
-		for(int i=0;i<account.length;i++) {		
-			if(account[i]!=null && accountId==account[i].getId()){
-				return String.format("%s \n" ,account[i]);
+		for(Account e : accounts) {		
+			if(e!=null && accountId==e.getId()){
+				return String.format("%s \n" ,e);
 			}
 		}	
 		return String.format("Account ID: %d does not exist.", accountId);
 	}
 	
 	// Removing an account by an account ID
-	public void removeAccount(Account acc) {
-		for(int i=0;i<account.length;i++) {
-			if(account[i]!=null && account[i].equals(acc)){
-				balance += account[i].getBalance();
-				Log log = new Log(System.currentTimeMillis(), getCid(), String.format("Client has deleted Account ID: %d", account[i].getId()), account[i].getBalance());
+	public void removeAccount(int accountID) {
+		for(Account e : accounts) {
+			if(e!=null && e.getId()==accountID){
+				balance += e.getBalance();
+				Log log = new Log(System.currentTimeMillis(), getCid(), String.format("Client has deleted Account ID: %d", e.getId()), e.getBalance());
 				Logger.log(log);
-				account[i]=null;
+				e=null;
 				return;
 			}
 			}
-		System.out.printf("Account: %s does not exist. thus cannot be removed. \n", acc);
+		System.out.printf("Account: %s does not exist. thus cannot be removed. \n", accountID);
 		}
 	
 	// Making a deposit to a Client.
@@ -102,9 +104,9 @@ public abstract class Client {
 	
 	// Auto-updating the amount of interest to add on each Client's accounts
 	public void autoUpdateAccounts() {
-		for(int i=0;i<account.length;i++) {
-			if(account[i]!=null)
-			 account[i].setBalance((account[i].getBalance()+ getInterestRate()));
+		for(Account e : accounts) {
+			if(e!=null)
+			 e.setBalance((e.getBalance()+ getInterestRate()));
 		}
 		Log log = new Log(System.currentTimeMillis(), getCid(), "Interest added to the Client's Account balance", getInterestRate());
 		Logger.log(log);
@@ -113,9 +115,9 @@ public abstract class Client {
 	// Returning the sum of a client balance + total accounts balance.
 	public float getFortune() {
 		float sum=0;
-		for(int i=0;i<account.length;i++) {
-			if(account[i]!=null) {
-			sum+=account[i].getBalance();
+		for(Account e : accounts) {
+			if(e!=null) {
+			sum+=e.getBalance();
 		}
 		}
 
@@ -165,7 +167,7 @@ public abstract class Client {
 	public String toString() {
 		return String.format(
 				"Client [ID=%s, Name=%s, Balance=%s, comissionRate=%s, interestRate=%s,]\n%s's Accounts=%s] ", cid,
-				name, balance, commissionRate, interestRate,name, Arrays.toString(account));
+				name, balance, commissionRate, interestRate,name, accounts);
 	}
 
 	@Override
@@ -188,6 +190,12 @@ public abstract class Client {
 		if (cid != other.cid)
 			return false;
 		return true;
+	}
+
+
+	public void add(Client client) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

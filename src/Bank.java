@@ -9,7 +9,7 @@ public class Bank {
 	Scanner scanner = new Scanner(System.in);
 	private static Bank instance = new Bank("The Big Bank");
 	private String bankName;
-	private Client[] clients;
+	private ArrayList<Client> clients = new ArrayList<>();
 	private Logger logService;
 	private float bBalance;
 	private static float totalCommission;
@@ -27,15 +27,14 @@ public class Bank {
 	}
 	
 	public void printClientList() {
-		for(int i=0;i<clients.length;i++) {
-			System.out.println(clients[i]);
+			System.out.println(clients.toString());
 		}
-	}
+	
 	
 	//Constructor (empty for now)
 	private Bank(String bankName) {
 			setBankName(bankName);
-			clients = new Client[100];
+	
 			
 		}
 
@@ -45,51 +44,51 @@ public class Bank {
 	//Adding a client to the array
 	public void addClient(int id, String name, float balance) {
 	
-		for(int j=0;j<clients.length;j++) {
-			if (clients[j]!=null && id==clients[j].getCid()) {
+		for(Client e : clients) {
+			if (e!=null && id==e.getCid()) {
 			System.out.printf("Client ID: %d already exists. \n", id);
 			return;
 			}
 		}
 		System.out.printf("Enter Client Type: regular, gold, platinum (all lower case) \n");
 		String Type = scanner.nextLine();
-		for(int i=0;i<clients.length;i++) {
-			if(clients[i]==null && Type.equals("regular")) {
-			clients[i] = new Regular_Client( id,  name, balance);
-			Log log = new Log(System.currentTimeMillis(), clients[i].getCid(), "Regular Client has been added to the bank.", balance);
+		if(clients!=null && clients.size() >=0)
+	
+			if(Type.equals("regular")) {
+			clients.add(new Regular_Client(id, name, balance));
+			Log log = new Log(System.currentTimeMillis(), id, "Regular Client has been added to the bank.", balance);
 			Logger.log(log);
 			return;
 			}
-		}
 		
-			for(int i=0;i<clients.length;i++) {
-				if(clients[i]==null && Type.equals("gold")) {
-				clients[i] = new Gold_Client( id,  name, balance);
-				Log log = new Log(System.currentTimeMillis(), clients[i].getCid(), "Gold Client has been added to the bank.", balance);
+		
+		
+				if(Type.equals("gold")) {
+				clients.add(new Gold_Client( id,  name, balance));
+				Log log = new Log(System.currentTimeMillis(), id, "Gold Client has been added to the bank.", balance);
 				Logger.log(log);
 				return;
 				}
-			}
 			
-				for(int i=0;i<clients.length;i++) {
-					if(clients[i]==null && Type.equals("platinum")) {
-					clients[i] = new Platinum_Client( id,  name, balance);
-					Log log = new Log(System.currentTimeMillis(), clients[i].getCid(), "Platinum Client has been added to the bank.", balance);
+			
+				if(Type.equals("platinum")) {
+					clients.add(new Platinum_Client( id,  name, balance));
+					Log log = new Log(System.currentTimeMillis(), id, "Platinum Client has been added to the bank.", balance);
 					Logger.log(log);
 					return;
 					}
 				}
-		}
+		
 		
 	
 	
 	//removing a client from the array
 	public void removeClient(Client client) {
-		for(int i=0;i<clients.length;i++) {
-			if(clients[i]==client) {
-				Log log = new Log(System.currentTimeMillis(), clients[i].getCid(), "Client has been removed.", clients[i].getBalance());
+		for(Client e : clients) {
+			if(e==client) {
+				Log log = new Log(System.currentTimeMillis(), e.getCid(), "Client has been removed.", e.getBalance());
 				Logger.log(log);
-				clients[i]=null;
+				e=null;
 				return;
 			}
 		}
@@ -107,9 +106,9 @@ public class Bank {
 	// Setting the bank's balance
 	public void setBalance() {
 		float sum = 0;
-	for(int i=0;i<clients.length;i++) {
-			if(clients[i]!=null) {
-				sum += clients[i].getFortune();
+	for(Client e : clients) {
+			if(e!=null) {
+				sum +=e.getFortune();
 			}
 		}
 			this.bBalance = sum+getTotalcommission();
@@ -126,19 +125,19 @@ public class Bank {
 	}
 	
 	// Supposed to retrieve clients (shows memory allocation for now), 
-	public Client[] getClients() {
-			return clients;
-		}
+	//public clients getClients() {
+	//		return clients;
+	//	}
 	
 	public Client getClient(int id) {
-		Client gc = null;
-		for(int i=0;i<clients.length;i++){
-			if(clients[i]!= null && id == clients[i].getCid()) {
-				 return clients[i];
-			}
+	
+		for(Client e : clients){
+			if(id == (int)e.getCid()) {
+				 return e;
 			
+			}
 		}
-				return gc;
+		return null;
 		}
 	
 	public String getBankName() {
@@ -151,8 +150,8 @@ public class Bank {
 	
 	@Override
 	public String toString() {
-		return String.format("Name : %s , Bank [clients=%s, logService=%s, balance=%s]", getBankName() , Arrays.toString(clients), logService,
-				bBalance);
+		return String.format("Bank [scanner=%s, bankName=%s, clients=%s, logService=%s, bBalance=%s]", scanner,
+				bankName, clients, logService, bBalance);
 	}
 
 	@Override
@@ -160,8 +159,10 @@ public class Bank {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + Float.floatToIntBits(bBalance);
-		result = prime * result + Arrays.hashCode(clients);
+		result = prime * result + ((bankName == null) ? 0 : bankName.hashCode());
+		result = prime * result + ((clients == null) ? 0 : clients.hashCode());
 		result = prime * result + ((logService == null) ? 0 : logService.hashCode());
+		result = prime * result + ((scanner == null) ? 0 : scanner.hashCode());
 		return result;
 	}
 
@@ -176,12 +177,25 @@ public class Bank {
 		Bank other = (Bank) obj;
 		if (Float.floatToIntBits(bBalance) != Float.floatToIntBits(other.bBalance))
 			return false;
-		if (!Arrays.equals(clients, other.clients))
+		if (bankName == null) {
+			if (other.bankName != null)
+				return false;
+		} else if (!bankName.equals(other.bankName))
+			return false;
+		if (clients == null) {
+			if (other.clients != null)
+				return false;
+		} else if (!clients.equals(other.clients))
 			return false;
 		if (logService == null) {
 			if (other.logService != null)
 				return false;
 		} else if (!logService.equals(other.logService))
+			return false;
+		if (scanner == null) {
+			if (other.scanner != null)
+				return false;
+		} else if (!scanner.equals(other.scanner))
 			return false;
 		return true;
 	}

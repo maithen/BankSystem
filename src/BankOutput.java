@@ -12,9 +12,12 @@ public class BankOutput {
 		
 		
 		bank.addClient(143, "loki", 500);
+		bank.addClient(145, "thor", 5550);
+		bank.getClient(143).addAccount(550, 300);
+		bank.getClient(143).addAccount(560, 300);
 		
-		bank.getClient(143).withdraw(500);
-System.out.println(bank.getClient(143).getBalance());
+		System.out.println(bank.getClient(143));
+		System.out.println(bank.getClient(145));
 
 		
 
