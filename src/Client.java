@@ -1,8 +1,9 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class Client {
+public abstract class Client implements Serializable {
 	
 	private int cid;
 	private String name;
@@ -87,7 +88,8 @@ public abstract class Client {
 	// Making a deposit to a Client.
 	public void deposit(float dp) {
 		
-		balance += dp-getCommissionRate();
+		balance += dp-(dp*getCommissionRate());
+		Bank.updateTotalCommission(dp*getCommissionRate());
 		
 	}
 	
@@ -166,7 +168,7 @@ public abstract class Client {
 	@Override
 	public String toString() {
 		return String.format(
-				"Client [ID=%s, Name=%s, Balance=%s, comissionRate=%s, interestRate=%s,]\n%s's Accounts=%s] ", cid,
+				"Client [ID=%s, Name=%s, Balance=%s, comissionRate=%s, interestRate=%s,]\n%s's Accounts=%s] \n", cid,
 				name, balance, commissionRate, interestRate,name, accounts);
 	}
 

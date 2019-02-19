@@ -1,6 +1,17 @@
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 import java.util.StringTokenizer;
@@ -31,9 +42,10 @@ public class Bank {
 		}
 	
 	
-	//Constructor (empty for now)
+	//Constructor 
 	private Bank(String bankName) {
 			setBankName(bankName);
+			load();
 	
 			
 		}
@@ -55,7 +67,7 @@ public class Bank {
 		if(clients!=null && clients.size() >=0)
 	
 			if(Type.equals("regular")) {
-			clients.add(new Regular_Client(id, name, balance));
+			clients.add(new ClientRegular(id, name, balance));
 			Log log = new Log(System.currentTimeMillis(), id, "Regular Client has been added to the bank.", balance);
 			Logger.log(log);
 			return;
@@ -64,7 +76,7 @@ public class Bank {
 		
 		
 				if(Type.equals("gold")) {
-				clients.add(new Gold_Client( id,  name, balance));
+				clients.add(new ClientGold( id,  name, balance));
 				Log log = new Log(System.currentTimeMillis(), id, "Gold Client has been added to the bank.", balance);
 				Logger.log(log);
 				return;
@@ -72,15 +84,64 @@ public class Bank {
 			
 			
 				if(Type.equals("platinum")) {
-					clients.add(new Platinum_Client( id,  name, balance));
+					clients.add(new ClientPlatinum( id,  name, balance));
 					Log log = new Log(System.currentTimeMillis(), id, "Platinum Client has been added to the bank.", balance);
 					Logger.log(log);
 					return;
 					}
 				}
 		
+	public void store() {
+		
+		ObjectOutputStream out = null;
+		try {
+			out = new ObjectOutputStream(new FileOutputStream(new File("M:\\Java\\bank.data")));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 	
+			try {
+				out.writeObject(clients);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		
+		try {
+			out.close();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		System.out.printf("Clients have been saved. \n");
+		
+		
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public void load() {
+		
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(new File("M:\\Java\\bank.data")));
+			try {
+				
+				clients = (ArrayList<Client>) in.readObject();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	//removing a client from the array
 	public void removeClient(Client client) {
@@ -107,9 +168,9 @@ public class Bank {
 	public void setBalance() {
 		float sum = 0;
 	for(Client e : clients) {
-			if(e!=null) {
+			
 				sum +=e.getFortune();
-			}
+			
 		}
 			this.bBalance = sum+getTotalcommission();
 	}
@@ -124,10 +185,10 @@ public class Bank {
 		return totalCommission;
 	}
 	
-	// Supposed to retrieve clients (shows memory allocation for now), 
-	//public clients getClients() {
-	//		return clients;
-	//	}
+	
+	public ArrayList<Client> getClients() {
+			return clients;
+		}
 	
 	public Client getClient(int id) {
 	
