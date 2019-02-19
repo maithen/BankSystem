@@ -11,7 +11,7 @@ public abstract class Client implements Serializable {
 	protected final float commissionRate;
 	protected final float interestRate;
 	private List<Account> accounts = new ArrayList();
-	private int counter=0;
+	
 	
 	
 	public Client(int clientId, String clientName, float clientBalance, float cr, float ir) {
@@ -41,10 +41,6 @@ public abstract class Client implements Serializable {
 				return;
 					}
 				
-
-
-			
-	
 	// Getting all Accounts.
 	public String getAccounts(){
 		String gA = "";
@@ -107,8 +103,7 @@ public abstract class Client implements Serializable {
 	// Auto-updating the amount of interest to add on each Client's accounts
 	public void autoUpdateAccounts() {
 		for(Account e : accounts) {
-			if(e!=null)
-			 e.setBalance((e.getBalance()+ getInterestRate()));
+			 e.setBalance((e.getBalance()+ (e.getBalance()*getInterestRate())));
 		}
 		Log log = new Log(System.currentTimeMillis(), getCid(), "Interest added to the Client's Account balance", getInterestRate());
 		Logger.log(log);
@@ -136,7 +131,6 @@ public abstract class Client implements Serializable {
 	public void setCid(int id) {
 		this.cid = id;
 		}
-	
 	public String getName() {
 		return name;
 	}
@@ -152,18 +146,10 @@ public abstract class Client implements Serializable {
 	public float getCommissionRate() {
 		return commissionRate;
 	}
-	//public void setCommissionRate(float commissionRate) {
-		
-		//this.commissionRate = commissionRate;
-		
-	//}
 	public float getInterestRate() {
 		return interestRate;
 	}
 
-	public int getCounter() {
-		return counter;
-	}
 
 	@Override
 	public String toString() {
@@ -194,11 +180,6 @@ public abstract class Client implements Serializable {
 		return true;
 	}
 
-
-	public void add(Client client) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	
 

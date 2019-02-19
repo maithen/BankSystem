@@ -41,7 +41,6 @@ public class Bank {
 			System.out.println(clients.toString());
 		}
 	
-	
 	//Constructor 
 	private Bank(String bankName) {
 			setBankName(bankName);
@@ -91,6 +90,42 @@ public class Bank {
 					}
 				}
 		
+	public void addClient(Client client) {
+		
+		for(Client e : clients) {
+			if (e!=null && client.getCid()==e.getCid()) {
+			System.out.printf("Client ID: %d already exists. \n", client.getCid());
+			return;
+			}
+		}
+		
+	
+			if(client instanceof ClientRegular) {
+			clients.add(client);
+			Log log = new Log(System.currentTimeMillis(), client.getCid(), "Regular Client has been added to the bank.", client.getBalance());
+			Logger.log(log);
+			return;
+			}
+		
+		
+		
+				if(client instanceof ClientGold) {
+				clients.add(client);
+				Log log = new Log(System.currentTimeMillis(), client.getCid(), "Gold Client has been added to the bank.", client.getBalance());
+				Logger.log(log);
+				return;
+				}
+			
+			
+				if(client instanceof ClientPlatinum) {
+					clients.add(client);
+					Log log = new Log(System.currentTimeMillis(), client.getCid(), "Platinum Client has been added to the bank.", client.getBalance());
+					Logger.log(log);
+					return;
+					}
+				}
+	
+
 	public void store() {
 		
 		ObjectOutputStream out = null;
@@ -120,14 +155,12 @@ public class Bank {
 		
 	}
 	
-	
 	@SuppressWarnings("unchecked")
 	public void load() {
 		
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(new File("M:\\Java\\bank.data")));
 			try {
-				
 				clients = (ArrayList<Client>) in.readObject();
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -185,7 +218,6 @@ public class Bank {
 		return totalCommission;
 	}
 	
-	
 	public ArrayList<Client> getClients() {
 			return clients;
 		}
@@ -201,6 +233,17 @@ public class Bank {
 		return null;
 		}
 	
+	public Client getClient(Client client) {
+		
+		for(Client e : clients){
+			if(e.equals(client)) {
+				 return e;
+			
+			}
+		}
+		return null;
+		}
+
 	public String getBankName() {
 		return bankName;
 	}

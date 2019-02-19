@@ -11,15 +11,10 @@ public class BankOutput {
 		
 		System.out.println(Bank.bank().getBankName());
 		
-		
-		bank.load();
-		
-	
-		System.out.println(bank.getClient(1234));
-		
-		
-		
+		System.out.println(bank.getClients());
 
+	
+		
 	}
 
 }
