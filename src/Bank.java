@@ -49,12 +49,18 @@ public class Bank {
 			startAccountUpdater();
 			
 			
+			
 		}
 
 	// Starts the account updater (empty for now)
 	public void startAccountUpdater()  {
-		Thread sau = new Thread(new AutoUpdater(clients));
-		sau.start();
+		Thread t1 = new Thread(new AutoUpdater(clients));
+		t1.start();
+		
+	
+		
+	
+		
 		
 		
 
@@ -139,7 +145,7 @@ public class Bank {
 		
 		ObjectOutputStream out = null;
 		try {
-			out = new ObjectOutputStream(new FileOutputStream(new File("M:\\Java\\bank.data")));
+			out = new ObjectOutputStream(new FileOutputStream(new File("C:\\Banksystem\\bank.data")));
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -168,7 +174,7 @@ public class Bank {
 	public void load() {
 		
 		try {
-			ObjectInputStream in = new ObjectInputStream(new FileInputStream(new File("M:\\Java\\bank.data")));
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(new File("C:\\Banksystem\\bank.data")));
 			try {
 				clients = (ArrayList<Client>) in.readObject();
 			} catch (ClassNotFoundException e) {

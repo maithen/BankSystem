@@ -23,7 +23,8 @@ public class Log {
 	
 	// Prints the log
 	public String toString() {	
-		return  String.format("Time: %s, Client ID: %d, Description: '%s', Amount: %f. ",date, clientId, description, amount);
+		
+		return  String.format("Time: %s, ID: %d, Description: '%s', Amount: %f. ",date, clientId, description, amount);
 	}
 	
 
