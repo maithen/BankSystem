@@ -15,6 +15,7 @@ public class AutoUpdater implements Runnable{
 		for(Client e: clientAc) {
 			e.autoUpdateAccounts();
 			
+			
 		}
 		
 	}

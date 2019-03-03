@@ -104,9 +104,9 @@ public abstract class Client implements Serializable {
 	public void autoUpdateAccounts() {
 		for(Account e : accounts) {
 			 e.setBalance((e.getBalance()+ (e.getBalance()*getInterestRate())));
+			 Log log = new Log(System.currentTimeMillis(), getCid(), "Interest added to the Client's Account balance",  (e.getBalance()*getInterestRate()));
+				Logger.log(log);
 		}
-		Log log = new Log(System.currentTimeMillis(), getCid(), "Interest added to the Client's Account balance", getInterestRate());
-		Logger.log(log);
 		}
 	
 	// Returning the sum of a client balance + total accounts balance.

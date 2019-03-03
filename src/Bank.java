@@ -30,6 +30,7 @@ public class Bank {
 	public static void updateTotalCommission(float UTC) {
 			 totalCommission += UTC;
 			
+			
 	}
 			
 	// Using the bank instance
@@ -42,15 +43,23 @@ public class Bank {
 		}
 	
 	//Constructor 
-	private Bank(String bankName) {
+	private Bank(String bankName)   {
 			setBankName(bankName);
 			load();
-	
+			startAccountUpdater();
+			
 			
 		}
 
 	// Starts the account updater (empty for now)
-	public void startAccountUpdater() {}
+	public void startAccountUpdater()  {
+		Thread sau = new Thread(new AutoUpdater(clients));
+		sau.start();
+		
+		
+
+		
+	}
 	
 	//Adding a client to the array
 	public void addClient(int id, String name, float balance) {

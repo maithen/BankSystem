@@ -8,10 +8,10 @@ public class BankOutput {
 	public static void main(String[] args) throws WithdrawException, IOException {
 
 		Bank bank = Bank.bank();
-		
 		System.out.println(Bank.bank().getBankName());
-		
+	
 		System.out.println(bank.getClients());
+		
 
 	
 		
